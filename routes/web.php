@@ -8,6 +8,14 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProfileController;
 
+/*
+|--------------------------------------------------------------------------
+| Route Web Yayasan Nur Hasan Nirum
+|--------------------------------------------------------------------------
+| Area publik (bisa diakses tanpa login) dan area admin (harus login)
+|--------------------------------------------------------------------------
+*/
+
 // 🚀 Redirect otomatis ke /home saat buka domain utama
 Route::get('/', function () {
     return redirect('/home');
@@ -16,7 +24,10 @@ Route::get('/', function () {
 // 🏠 Halaman utama menampilkan program (frontend)
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 
-// 💰 Halaman Donasi
+// 📄 Halaman detail program (frontend, untuk umum)
+Route::get('/program/{id}', [ProgramController::class, 'show'])->name('program.show');
+
+// 💰 Halaman Donasi (frontend)
 Route::get('/donasi', [DonasiController::class, 'index'])->name('donasi.index');
 Route::post('/donasi', [DonasiController::class, 'store'])->name('donasi.store');
 
@@ -38,8 +49,8 @@ Route::middleware('auth')->group(function () {
     // 🔚 Logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    // ⚙️ CRUD Program
-    Route::resource('/admin/programs', ProgramController::class);
+    // ⚙️ CRUD Program (admin only)
+    Route::resource('/admin/programs', ProgramController::class)->except(['show']);
 
     // 👁️‍🗨️ Fitur Hide / Unhide Program
     Route::patch('/admin/programs/{program}/toggle', [ProgramController::class, 'toggleVisibility'])
@@ -52,6 +63,3 @@ Route::middleware('auth')->group(function () {
     // 👀 Preview Program (khusus admin)
     Route::get('/admin/programs/{id}/preview', [ProgramController::class, 'preview'])->name('programs.preview');
 });
-
-// 📄 Halaman detail program (frontend)
-Route::get('/program/{id}', [ProgramController::class, 'show'])->name('program.show');

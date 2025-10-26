@@ -162,20 +162,20 @@
     <!-- Perubahan di sini 👇 -->
     <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-start">
       @foreach($programs as $program)
-        <div class="col" data-aos="zoom-in" data-aos-delay="{{ $loop->iteration * 100 }}">
-          <a href="{{ route('programs.show', $program->id) }}" class="text-decoration-none text-dark">
-            <div class="program-card shadow-sm p-4 rounded-4 bg-white">
-              @if($program->ikon)
-                <img src="{{ asset('storage/' . $program->ikon) }}" alt="{{ $program->judul }}">
-              @else
-                <img src="{{ asset('images/default.png') }}" alt="Program">
-              @endif
-              <h5 class="mt-3 text-success fw-bold">{{ $program->judul }}</h5>
-              <!-- Deskripsi dihapus dari tampilan home -->
-            </div>
-          </a>
-        </div>
-      @endforeach
+  <div class="col" data-aos="zoom-in" data-aos-delay="{{ $loop->iteration * 100 }}">
+    <a href="{{ route('program.show', $program->id) }}" class="text-decoration-none text-dark">
+      <div class="program-card shadow-sm p-4 rounded-4 bg-white">
+        @if($program->ikon)
+          <img src="{{ asset('storage/' . $program->ikon) }}" alt="{{ $program->judul }}">
+        @else
+          <img src="{{ asset('images/default.png') }}" alt="Program">
+        @endif
+        <h5 class="mt-3 text-success fw-bold">{{ $program->judul }}</h5>
+      </div>
+    </a>
+  </div>
+@endforeach
+
     </div>
   </div>
 </section>
